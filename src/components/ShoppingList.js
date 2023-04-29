@@ -7,6 +7,47 @@ function ShoppingList() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [items, setItems] = useState([]);
 
+    // Add useEffect hook
+    useEffect(() => {
+      fetch("http://localhost:4000/items")
+        .then((r) => r.json())
+        .then((items) => setItems(items));
+    }, []);
+
+
+      // add this callback function
+  // function handleUpdateItem(updatedItem) {
+  //   console.log("In ShoppingCart:", updatedItem);
+  // }
+  function handleUpdateItem(updatedItem) {
+    const updatedItems = items.map((item) => {
+      if (item.id === updatedItem.id) {
+        return updatedItem;
+      } else {
+        return item;
+      }
+    });
+    setItems(updatedItems);
+  }
+
+  //  // add this callback function
+  //  function handleDeleteItem(deletedItem) {
+  //   console.log("In ShoppingCart:", deletedItem);
+  // }
+  
+  function handleDeleteItem(deletedItem) {
+    const updatedItems = items.filter((item) => item.id !== deletedItem.id);
+    setItems(updatedItems);
+  }
+
+     // add this function!
+  // function handleAddItem(newItem) {
+  //   console.log("In ShoppingList:", newItem);
+  // }
+  function handleAddItem(newItem) {
+    setItems([...items, newItem]);
+  }
+
   function handleCategoryChange(category) {
     setSelectedCategory(category);
   }
